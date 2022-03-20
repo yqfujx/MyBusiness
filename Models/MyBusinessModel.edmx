@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MyBusinessModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MyBusinessModelStoreContainer">
+    <EntitySet Name="PurchaseContractSet" EntityType="MyBusinessModel.Store.PurchaseContractSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PartnerSet" EntityType="MyBusinessModel.Store.PartnerSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DeliverySet" EntityType="MyBusinessModel.Store.DeliverySet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PurchaseTargetSet" EntityType="MyBusinessModel.Store.PurchaseTargetSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PurchaseDeliverySet" EntityType="MyBusinessModel.Store.PurchaseDeliverySet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PartnerDocuments" EntityType="MyBusinessModel.Store.PartnerDocuments" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="PurchaseContractPurchaseTarget" Association="MyBusinessModel.Store.PurchaseContractPurchaseTarget">
+      <End Role="PurchaseContract" EntitySet="PurchaseContractSet" />
+      <End Role="PurchaseTarget" EntitySet="PurchaseTargetSet" />
+    </AssociationSet>
+    <AssociationSet Name="PurchaseContractPartner" Association="MyBusinessModel.Store.PurchaseContractPartner">
+      <End Role="PurchaseContract" EntitySet="PurchaseContractSet" />
+      <End Role="Partner" EntitySet="PartnerSet" />
+    </AssociationSet>
+    <AssociationSet Name="PurchaseContractPurchaseDelivery" Association="MyBusinessModel.Store.PurchaseContractPurchaseDelivery">
+      <End Role="PurchaseContract" EntitySet="PurchaseContractSet" />
+      <End Role="PurchaseDelivery" EntitySet="PurchaseDeliverySet" />
+    </AssociationSet>
+    <AssociationSet Name="DeliveryPurchaseDelivery" Association="MyBusinessModel.Store.DeliveryPurchaseDelivery">
+      <End Role="Delivery" EntitySet="DeliverySet" />
+      <End Role="PurchaseDelivery" EntitySet="PurchaseDeliverySet" />
+    </AssociationSet>
+    <AssociationSet Name="PartnerPartnerDocument" Association="MyBusinessModel.Store.PartnerPartnerDocument">
+      <End Role="Partner" EntitySet="PartnerSet" />
+      <End Role="PartnerDocument" EntitySet="PartnerDocuments" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="PurchaseContractSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="SignDate" Type="datetime" Nullable="false" />
+    <Property Name="PartnerId" Type="int" Nullable="false" />
+    <Property Name="DeliveryEndDate" Type="datetime" Nullable="true" />
+    <Property Name="Document1" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="Document2" Type="nvarchar" Nullable="true" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="PartnerSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="40" />
+    <Property Name="Contact" Type="nvarchar" Nullable="true" MaxLength="10" />
+    <Property Name="Phone" Type="nvarchar" Nullable="true" MaxLength="16" />
+  </EntityType>
+  <EntityType Name="DeliverySet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CarriageCode" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="BillCode" Type="nvarchar" Nullable="true" MaxLength="20" />
+    <Property Name="GoodsName" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="Quantity" Type="real" Nullable="false" />
+    <Property Name="Source" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Destination" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Provider" Type="nvarchar" Nullable="false" MaxLength="40" />
+    <Property Name="LeaveDate" Type="datetime" Nullable="false" />
+    <Property Name="ArriveDate" Type="datetime" Nullable="true" />
+    <Property Name="Receiver" Type="nvarchar" Nullable="false" MaxLength="40" />
+    <Property Name="Picture" Type="nvarchar" Nullable="true" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="PurchaseTargetSet">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="PurchaseContractId" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="PurchaseContractId" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="real" Nullable="false" />
+    <Property Name="Price" Type="real" Nullable="false" />
+    <Property Name="Quality" Type="nvarchar" Nullable="false" MaxLength="800" />
+    <Property Name="DeliveryWay" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="Place" Type="nvarchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="PurchaseDeliverySet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Quantity" Type="real" Nullable="false" />
+    <Property Name="PurchaseContractId" Type="int" Nullable="false" />
+    <Property Name="DeliveryId" Type="int" Nullable="false" />
+    <Property Name="ReceiveQuantity" Type="real" Nullable="true" />
+  </EntityType>
+  <EntityType Name="PartnerDocuments">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="PartnerId" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PartnerId" Type="int" Nullable="false" />
+    <Property Name="PathName" Type="nvarchar" Nullable="false" MaxLength="256" />
+  </EntityType>
+  <Association Name="PurchaseContractPurchaseTarget">
+    <End Role="PurchaseContract" Type="MyBusinessModel.Store.PurchaseContractSet" Multiplicity="1" />
+    <End Role="PurchaseTarget" Type="MyBusinessModel.Store.PurchaseTargetSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseContract">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseTarget">
+        <PropertyRef Name="PurchaseContractId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PurchaseContractPartner">
+    <End Role="PurchaseContract" Type="MyBusinessModel.Store.PurchaseContractSet" Multiplicity="*" />
+    <End Role="Partner" Type="MyBusinessModel.Store.PartnerSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Partner">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseContract">
+        <PropertyRef Name="PartnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PurchaseContractPurchaseDelivery">
+    <End Role="PurchaseContract" Type="MyBusinessModel.Store.PurchaseContractSet" Multiplicity="1" />
+    <End Role="PurchaseDelivery" Type="MyBusinessModel.Store.PurchaseDeliverySet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseContract">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseDelivery">
+        <PropertyRef Name="PurchaseContractId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DeliveryPurchaseDelivery">
+    <End Role="Delivery" Type="MyBusinessModel.Store.DeliverySet" Multiplicity="1" />
+    <End Role="PurchaseDelivery" Type="MyBusinessModel.Store.PurchaseDeliverySet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Delivery">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseDelivery">
+        <PropertyRef Name="DeliveryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PartnerPartnerDocument">
+    <End Role="Partner" Type="MyBusinessModel.Store.PartnerSet" Multiplicity="1" />
+    <End Role="PartnerDocument" Type="MyBusinessModel.Store.PartnerDocuments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Partner">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PartnerDocument">
+        <PropertyRef Name="PartnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MyBusinessModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MyBusinessModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PurchaseContractSet" EntityType="MyBusinessModel.PurchaseContract" />
+          <EntitySet Name="PartnerSet" EntityType="MyBusinessModel.Partner" />
+          <EntitySet Name="DeliverySet" EntityType="MyBusinessModel.Delivery" />
+          <EntitySet Name="PurchaseTargetSet" EntityType="MyBusinessModel.PurchaseTarget" />
+          <AssociationSet Name="PurchaseContractPurchaseTarget" Association="MyBusinessModel.PurchaseContractPurchaseTarget">
+            <End Role="PurchaseContract" EntitySet="PurchaseContractSet" />
+            <End Role="PurchaseTarget" EntitySet="PurchaseTargetSet" />
+          </AssociationSet>
+          <AssociationSet Name="PurchaseContractPartner" Association="MyBusinessModel.PurchaseContractPartner">
+            <End Role="PurchaseContract" EntitySet="PurchaseContractSet" />
+            <End Role="Partner" EntitySet="PartnerSet" />
+          </AssociationSet>
+          <EntitySet Name="PurchaseDeliverySet" EntityType="MyBusinessModel.PurchaseDelivery" />
+          <AssociationSet Name="PurchaseContractPurchaseDelivery" Association="MyBusinessModel.PurchaseContractPurchaseDelivery">
+            <End Role="PurchaseContract" EntitySet="PurchaseContractSet" />
+            <End Role="PurchaseDelivery" EntitySet="PurchaseDeliverySet" />
+          </AssociationSet>
+          <AssociationSet Name="DeliveryPurchaseDelivery" Association="MyBusinessModel.DeliveryPurchaseDelivery">
+            <End Role="Delivery" EntitySet="DeliverySet" />
+            <End Role="PurchaseDelivery" EntitySet="PurchaseDeliverySet" />
+          </AssociationSet>
+          <EntitySet Name="PartnerDocuments" EntityType="MyBusinessModel.PartnerDocument" />
+          <AssociationSet Name="PartnerPartnerDocument" Association="MyBusinessModel.PartnerPartnerDocument">
+            <End Role="Partner" EntitySet="PartnerSet" />
+            <End Role="PartnerDocument" EntitySet="PartnerDocuments" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="PurchaseContract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="SignDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PurchaseTarget" Relationship="MyBusinessModel.PurchaseContractPurchaseTarget" FromRole="PurchaseContract" ToRole="PurchaseTarget" />
+          <NavigationProperty Name="Partner" Relationship="MyBusinessModel.PurchaseContractPartner" FromRole="PurchaseContract" ToRole="Partner" />
+          <Property Name="PartnerId" Nullable="false" Type="Int32" />
+          <Property Name="DeliveryEndDate" Type="DateTime" Nullable="true" Precision="3" />
+          <NavigationProperty Name="Delivery" Relationship="MyBusinessModel.PurchaseContractPurchaseDelivery" FromRole="PurchaseContract" ToRole="PurchaseDelivery" />
+          <Property Name="Document1" Type="String" Nullable="true" MaxLength="256" />
+          <Property Name="Document2" Type="String" Nullable="true" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Partner">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+          <Property Name="Contact" Type="String" Nullable="true" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="Phone" Type="String" Nullable="true" MaxLength="16" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="PartnerDocuments" Relationship="MyBusinessModel.PartnerPartnerDocument" FromRole="Partner" ToRole="PartnerDocument" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarriageCode" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="BillCode" Type="String" Nullable="true" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="GoodsName" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="Quantity" Type="Single" Nullable="false" />
+          <Property Name="Source" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Destination" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Provider" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+          <Property Name="LeaveDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PurchaseDelivery" Relationship="MyBusinessModel.DeliveryPurchaseDelivery" FromRole="Delivery" ToRole="PurchaseDelivery" />
+          <Property Name="ArriveDate" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="Receiver" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+          <Property Name="Picture" Type="String" Nullable="true" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="PurchaseTarget">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="PurchaseContractId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="PurchaseContractId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Single" Nullable="false" />
+          <Property Name="Price" Type="Single" Nullable="false" />
+          <Property Name="Quality" Type="String" Nullable="false" MaxLength="800" Unicode="true" FixedLength="false" />
+          <Property Name="DeliveryWay" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="Place" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <Association Name="PurchaseContractPurchaseTarget">
+          <End Type="MyBusinessModel.PurchaseContract" Role="PurchaseContract" Multiplicity="1" />
+          <End Type="MyBusinessModel.PurchaseTarget" Role="PurchaseTarget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseContract">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseTarget">
+              <PropertyRef Name="PurchaseContractId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PurchaseContractPartner">
+          <End Type="MyBusinessModel.PurchaseContract" Role="PurchaseContract" Multiplicity="*" />
+          <End Type="MyBusinessModel.Partner" Role="Partner" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Partner">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseContract">
+              <PropertyRef Name="PartnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PurchaseDelivery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Quantity" Type="Single" Nullable="false" />
+          <NavigationProperty Name="Contract" Relationship="MyBusinessModel.PurchaseContractPurchaseDelivery" FromRole="PurchaseDelivery" ToRole="PurchaseContract" />
+          <Property Name="PurchaseContractId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Delivery" Relationship="MyBusinessModel.DeliveryPurchaseDelivery" FromRole="PurchaseDelivery" ToRole="Delivery" />
+          <Property Name="DeliveryId" Type="Int32" Nullable="false" />
+          <Property Name="ReceiveQuantity" Type="Single" Nullable="true" />
+        </EntityType>
+        <Association Name="PurchaseContractPurchaseDelivery">
+          <End Type="MyBusinessModel.PurchaseContract" Role="PurchaseContract" Multiplicity="1" />
+          <End Type="MyBusinessModel.PurchaseDelivery" Role="PurchaseDelivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseContract">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseDelivery">
+              <PropertyRef Name="PurchaseContractId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeliveryPurchaseDelivery">
+          <End Type="MyBusinessModel.Delivery" Role="Delivery" Multiplicity="1" />
+          <End Type="MyBusinessModel.PurchaseDelivery" Role="PurchaseDelivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseDelivery">
+              <PropertyRef Name="DeliveryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PartnerDocument">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="PartnerId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PartnerId" Type="Int32" Nullable="false" />
+          <Property Name="PathName" Type="String" Nullable="false" MaxLength="256" />
+        </EntityType>
+        <Association Name="PartnerPartnerDocument">
+          <End Type="MyBusinessModel.Partner" Role="Partner" Multiplicity="1" />
+          <End Type="MyBusinessModel.PartnerDocument" Role="PartnerDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partner">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerDocument">
+              <PropertyRef Name="PartnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MyBusinessModelStoreContainer" CdmEntityContainer="MyBusinessModelContainer">
+    <EntitySetMapping Name="PurchaseContractSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MyBusinessModel.PurchaseContract)">
+        <MappingFragment StoreEntitySet="PurchaseContractSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="SignDate" ColumnName="SignDate" />
+          <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
+          <ScalarProperty Name="DeliveryEndDate" ColumnName="DeliveryEndDate" />
+          <ScalarProperty Name="Document1" ColumnName="Document1" />
+          <ScalarProperty Name="Document2" ColumnName="Document2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PartnerSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MyBusinessModel.Partner)">
+        <MappingFragment StoreEntitySet="PartnerSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Contact" ColumnName="Contact" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliverySet">
+      <EntityTypeMapping TypeName="IsTypeOf(MyBusinessModel.Delivery)">
+        <MappingFragment StoreEntitySet="DeliverySet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CarriageCode" ColumnName="CarriageCode" />
+          <ScalarProperty Name="BillCode" ColumnName="BillCode" />
+          <ScalarProperty Name="GoodsName" ColumnName="GoodsName" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="Destination" ColumnName="Destination" />
+          <ScalarProperty Name="Provider" ColumnName="Provider" />
+          <ScalarProperty Name="LeaveDate" ColumnName="LeaveDate" />
+          <ScalarProperty Name="ArriveDate" ColumnName="ArriveDate" />
+          <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+          <ScalarProperty Name="Picture" ColumnName="Picture" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PurchaseTargetSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MyBusinessModel.PurchaseTarget)">
+        <MappingFragment StoreEntitySet="PurchaseTargetSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PurchaseContractId" ColumnName="PurchaseContractId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Quality" ColumnName="Quality" />
+          <ScalarProperty Name="DeliveryWay" ColumnName="DeliveryWay" />
+          <ScalarProperty Name="Place" ColumnName="Place" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PurchaseDeliverySet">
+      <EntityTypeMapping TypeName="IsTypeOf(MyBusinessModel.PurchaseDelivery)">
+        <MappingFragment StoreEntitySet="PurchaseDeliverySet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="PurchaseContractId" ColumnName="PurchaseContractId" />
+          <ScalarProperty Name="DeliveryId" ColumnName="DeliveryId" />
+          <ScalarProperty Name="ReceiveQuantity" ColumnName="ReceiveQuantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PartnerDocuments">
+      <EntityTypeMapping TypeName="IsTypeOf(MyBusinessModel.PartnerDocument)">
+        <MappingFragment StoreEntitySet="PartnerDocuments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
+          <ScalarProperty Name="PathName" ColumnName="PathName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+	<siteMapNode url="~/" title="首页" description="首页">
+		<siteMapNode url="~/Purchase/Index" title="采购"  description="采购业务，采购合同，采购明细，采购统计">
+			<siteMapNode url="~/Purchase/Contract" title="新采购" description="填报新的采购业务" />
+		</siteMapNode>
+		<siteMapNode url="~/Sale/Index" title="销售"  description="销售业务，销售合同，销售明细，销售报表" />
+		<siteMapNode url="~/OA/Index" title="审批"  description="业务审批" />
+		<siteMapNode url="~/Delivery/Index" title="发货信息"  description="发货信息">
+			<siteMapNode url="~/Delivery/Create" title="新增发货" description="新增发货信息" />
+		</siteMapNode>
+		<siteMapNode url="~/Partner/Index" title="合作方信息"  description="合作伙伴信息查询、维护">
+			<siteMapNode url="~/Partner/Item" title="合作方信息明细" description="合作方信息录入维护" />
+		</siteMapNode>
+		</siteMapNode>
+</siteMap>

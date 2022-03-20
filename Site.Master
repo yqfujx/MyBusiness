@@ -1,0 +1,39 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="MyBusiness.Site" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link href="~/Content/Site.css" type="text/css" rel="stylesheet" />
+    <script language="javascript" type="text/javascript" src="/Scripts/jquery-3.4.1.js"></script>
+    <script language="javascript" type="text/javascript" src="/Scripts/jquery-ui-1.13.0.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".editordatepicker").datepicker();
+        });
+    </script>
+    <asp:ContentPlaceHolder ID="HeadContentPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="TopNavigation">
+            <uc:UserInfoControl runat="server" ID="UserInfoControl" UserName="开发人员" />
+            <div id="TopNavigationImage">
+            </div>
+            <asp:SiteMapPath ID="SiteMapPath1" runat="server">
+            </asp:SiteMapPath>
+            <br />
+            <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1" Orientation="Horizontal">
+            </asp:Menu>
+            <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" ShowStartingNode="False" />
+        </div>
+        <hr />
+        <asp:ContentPlaceHolder ID="MainContentPlaceHolder" runat="server">
+        </asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>

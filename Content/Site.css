@@ -1,0 +1,75 @@
+﻿body {
+    background-color:#EEEEEE;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+div {
+    background-color:white;
+    padding:10px;
+}
+.aspNetHidden {
+    padding:0px;
+}
+
+.center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+/*    -webkit-transform: translateY(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);*/
+    transform: translateX(-50%) translateY(-50%);
+}
+#TopNavigationImage {
+    background-color: coral;
+    height: 30px;
+}
+#UserInfoControl {
+    background-color:aqua;
+    height:25px;
+}
+.GridView {
+    width:100%;
+}
+td.FieldName {
+    text-align:right;
+    padding-left:20px;
+    padding-right:25px;
+}
+.LeftFloat{
+    float:left;
+}
+.Section {
+    margin-bottom:8px;
+}
+.DataEntry{
+    margin-right:20px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.DataEntry b{
+    color:red;
+}
+.Thumbnail {
+    width:40px;
+    height:40px;
+}
